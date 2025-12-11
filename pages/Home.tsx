@@ -16,7 +16,6 @@ export const Home: React.FC = () => {
   const settings = getSettings();
 
   useEffect(() => {
-    // Only get Published Posts (not Pages)
     const allPosts = getPosts();
     const publishedPosts = allPosts.filter(p => p.status === 'published' && p.type === 'post');
     
@@ -46,183 +45,213 @@ export const Home: React.FC = () => {
 
   return (
     <Layout>
-      {/* --- MODERN HERO SECTION --- */}
-      <section className="relative overflow-hidden pt-32 pb-20 lg:pt-48 lg:pb-32">
-          {/* Background Elements */}
-          <div className="absolute inset-0 z-0">
-             <div className="absolute top-0 left-0 w-full h-full bg-slate-50"></div>
-             <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-brand-200/40 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
-             <div className="absolute top-[20%] left-[-10%] w-[500px] h-[500px] bg-purple-200/40 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
-             <div className="absolute bottom-[-10%] right-[20%] w-[400px] h-[400px] bg-pink-200/40 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-4000"></div>
-             <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
+      {/* --- HERO SECTION WITH WAVES --- */}
+      <section className="relative overflow-hidden bg-brand-50 pt-32 pb-48 lg:pt-40 lg:pb-64">
+          
+          {/* Animated Blobs Background */}
+          <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
+              <div className="absolute -top-20 -left-20 w-96 h-96 bg-brand-200 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob"></div>
+              <div className="absolute top-0 -right-20 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-2000"></div>
+              <div className="absolute -bottom-32 left-20 w-96 h-96 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-4000"></div>
           </div>
 
-          <div className="container mx-auto px-4 lg:px-8 relative z-10 text-center">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200 shadow-sm text-slate-600 text-sm font-semibold mb-8 animate-fade-in-up">
-                  <span className="flex h-2 w-2 rounded-full bg-green-500 animate-pulse"></span>
-                  Yeni Eğitim Dönemi İçerikleri Yayında!
-              </div>
-
-              <h1 className="text-5xl md:text-7xl font-extrabold text-slate-900 mb-8 tracking-tight leading-[1.1]">
-                  Geleceği <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-brand-400">Şekillendiren</span><br/>
-                  Eğitim Materyalleri
-              </h1>
-              
-              <p className="text-lg md:text-xl text-slate-600 mb-10 max-w-2xl mx-auto leading-relaxed">
-                  {settings.siteDescription}
-              </p>
-              
-              <div className="max-w-2xl mx-auto relative group mb-12">
-                  <div className="absolute inset-0 bg-gradient-to-r from-brand-400 to-purple-400 rounded-full blur opacity-25 group-hover:opacity-40 transition duration-300"></div>
-                  <div className="relative flex items-center bg-white rounded-full p-2 shadow-xl shadow-brand-900/5 ring-1 ring-slate-100">
-                      <div className="pl-4 text-slate-400">
-                          <Search className="w-6 h-6" />
+          <div className="container mx-auto px-4 lg:px-8 relative z-10">
+              <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+                  
+                  {/* Left Text */}
+                  <div className="flex-1 text-center lg:text-left">
+                      <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-brand-100 shadow-sm text-brand-600 text-sm font-bold mb-6 animate-fade-in-up">
+                          <span className="flex h-2 w-2 rounded-full bg-brand-500 animate-pulse"></span>
+                          Yeni Nesil Eğitim Platformu
                       </div>
-                      <input
-                        type="text"
-                        placeholder="Matematik, Fen, LGS veya bir konu arayın..."
-                        className="flex-1 py-3 px-4 bg-transparent outline-none text-slate-700 placeholder:text-slate-400 text-lg"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                      />
-                      <button className="bg-slate-900 hover:bg-slate-800 text-white px-8 py-3 rounded-full font-bold transition-transform active:scale-95">
-                          Ara
-                      </button>
+                      
+                      <h1 className="text-5xl lg:text-7xl font-extrabold text-slate-900 mb-6 leading-[1.1] tracking-tight">
+                          Geleceği <span className="text-brand-500 relative inline-block">
+                              İnşa Et
+                              <svg className="absolute w-full h-3 -bottom-1 left-0 text-brand-200 -z-10" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="8" fill="none" /></svg>
+                          </span><br/>
+                          Hayalleri Büyüt.
+                      </h1>
+                      
+                      <p className="text-lg text-slate-600 mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed font-medium">
+                          {settings.siteDescription}
+                      </p>
+                      
+                      <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                          <button className="bg-brand-600 hover:bg-brand-700 text-white px-8 py-4 rounded-full font-bold text-lg shadow-lg shadow-brand-500/30 transition-all hover:-translate-y-1">
+                              Derslere Başla
+                          </button>
+                          <div className="relative group">
+                              <div className="absolute inset-0 bg-brand-400 rounded-full blur opacity-20 group-hover:opacity-40 transition-opacity"></div>
+                              <div className="relative flex items-center bg-white rounded-full p-1 pl-4 shadow-md border border-slate-100">
+                                  <input 
+                                    type="text" 
+                                    placeholder="Konu ara..." 
+                                    className="bg-transparent outline-none text-slate-700 placeholder:text-slate-400 w-40 sm:w-64"
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                  />
+                                  <button className="p-3 bg-slate-900 text-white rounded-full hover:bg-slate-800 transition-colors">
+                                      <Search className="w-5 h-5" />
+                                  </button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+                  {/* Right Image */}
+                  <div className="flex-1 relative">
+                      <div className="relative z-10 rounded-[3rem] overflow-hidden shadow-2xl shadow-brand-900/10 border-8 border-white transform rotate-2 hover:rotate-0 transition-transform duration-500">
+                          <img 
+                            src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                            alt="Education" 
+                            className="w-full h-auto object-cover"
+                          />
+                      </div>
+                      
+                      {/* Decorative Elements */}
+                      <div className="absolute -bottom-10 -left-10 z-20 bg-white p-4 rounded-2xl shadow-xl animate-float">
+                          <div className="flex items-center gap-3">
+                              <div className="bg-green-100 p-3 rounded-full text-green-600">
+                                  <BookOpen className="w-6 h-6" />
+                              </div>
+                              <div>
+                                  <p className="text-xs text-slate-500 font-bold uppercase">Toplam İçerik</p>
+                                  <p className="text-xl font-bold text-slate-900">500+</p>
+                              </div>
+                          </div>
+                      </div>
+                      
+                      <div className="absolute -top-6 -right-6 z-0">
+                          <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-brand-300 animate-spin-slow">
+                              <path d="M50 0L61.2 38.8L100 50L61.2 61.2L50 100L38.8 61.2L0 50L38.8 38.8L50 0Z" fill="currentColor"/>
+                          </svg>
+                      </div>
                   </div>
               </div>
           </div>
+
+          {/* Wave Separator */}
+          <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-[0]">
+              <svg className="relative block w-[calc(100%+1.3px)] h-[100px] text-white" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                  <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="currentColor"></path>
+              </svg>
+          </div>
       </section>
 
-      {/* --- CONTENT SECTION --- */}
-      <div className="bg-white relative z-20 rounded-t-[3rem] shadow-[0_-20px_40px_-15px_rgba(0,0,0,0.05)] pt-16 pb-20 min-h-screen">
+      {/* --- CATEGORIES & CONTENT --- */}
+      <section className="py-20 bg-white relative z-20">
          <div className="container mx-auto px-4 lg:px-8">
             
-            {/* Billboard Ad Slot */}
-            <div className="mb-16">
-               <AdUnit format="auto" className="h-32 rounded-2xl bg-slate-50 border border-dashed border-slate-200" />
-            </div>
-
-            {/* Categories */}
-            <div className="mb-12">
-                 <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-2xl font-bold text-slate-900">Popüler Kategoriler</h2>
-                    <a href="#" className="text-sm font-semibold text-brand-600 hover:text-brand-700 flex items-center gap-1">Tümünü Gör <ChevronRight className="w-4 h-4"/></a>
-                 </div>
-                 <div className="flex flex-wrap gap-3">
+            {/* Categories Pills */}
+            <div className="flex flex-wrap justify-center gap-4 mb-16">
+                <button 
+                    onClick={() => setActiveCategory('Tümü')}
+                    className={`px-6 py-3 rounded-full font-bold text-sm transition-all shadow-sm ${activeCategory === 'Tümü' ? 'bg-slate-900 text-white shadow-lg scale-105' : 'bg-slate-100 text-slate-600 hover:bg-brand-100 hover:text-brand-700'}`}
+                >
+                    Tümü
+                </button>
+                {categories.map(cat => (
                     <button 
-                        onClick={() => setActiveCategory('Tümü')}
-                        className={`px-6 py-3 rounded-2xl text-sm font-bold transition-all duration-300 border-2 ${activeCategory === 'Tümü' ? 'bg-slate-900 border-slate-900 text-white' : 'bg-white border-slate-100 text-slate-600 hover:border-brand-200 hover:text-brand-600'}`}
+                        key={cat.id}
+                        onClick={() => setActiveCategory(cat.name)}
+                        className={`px-6 py-3 rounded-full font-bold text-sm transition-all shadow-sm ${activeCategory === cat.name ? 'bg-brand-500 text-white shadow-lg shadow-brand-500/30 scale-105' : 'bg-slate-100 text-slate-600 hover:bg-brand-100 hover:text-brand-700'}`}
                     >
-                        Tümü
+                        {cat.name}
                     </button>
-                    {categories.map(cat => (
-                        <button 
-                            key={cat.id}
-                            onClick={() => setActiveCategory(cat.name)}
-                            className={`px-6 py-3 rounded-2xl text-sm font-bold transition-all duration-300 border-2 ${activeCategory === cat.name ? 'bg-slate-900 border-slate-900 text-white shadow-lg' : 'bg-white border-slate-100 text-slate-600 hover:border-brand-200 hover:text-brand-600'}`}
-                        >
-                            {cat.name}
-                        </button>
-                    ))}
-                 </div>
+                ))}
             </div>
 
-            {/* Main Content Grid */}
-            {filteredPosts.length === 0 ? (
-                <div className="text-center py-24 bg-slate-50 rounded-3xl border-2 border-dashed border-slate-200">
-                    <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm text-slate-300">
-                        <Search className="w-8 h-8" />
-                    </div>
-                    <h3 className="text-xl font-bold text-slate-900 mb-2">İçerik bulunamadı</h3>
-                    <p className="text-slate-500">Arama kriterlerinizi değiştirerek tekrar deneyin.</p>
+            {/* Featured Post (Card Style 1) */}
+            {featuredPost && (
+                <div className="mb-20">
+                    <Link to={`/post/${featuredPost.slug}`} className="group block relative rounded-[2rem] bg-slate-900 overflow-hidden shadow-2xl hover:shadow-brand-900/20 transition-all duration-500">
+                        <div className="grid lg:grid-cols-2">
+                            <div className="p-8 lg:p-16 flex flex-col justify-center relative z-10">
+                                <div className="absolute top-0 right-0 p-32 bg-brand-500 rounded-full blur-[100px] opacity-20 pointer-events-none"></div>
+                                
+                                <span className="inline-block text-brand-300 font-bold tracking-wider uppercase text-xs mb-4">Günün Önerisi</span>
+                                <h2 className="text-3xl lg:text-5xl font-extrabold text-white mb-6 leading-tight group-hover:text-brand-300 transition-colors">
+                                    {featuredPost.title}
+                                </h2>
+                                <p className="text-slate-400 text-lg mb-8 line-clamp-3 leading-relaxed">
+                                    {featuredPost.excerpt}
+                                </p>
+                                <div className="flex items-center gap-4">
+                                    <div className="w-12 h-12 rounded-full bg-brand-500 flex items-center justify-center text-white group-hover:scale-110 transition-transform">
+                                        <ArrowRight className="w-6 h-6" />
+                                    </div>
+                                    <span className="text-white font-bold group-hover:underline decoration-brand-500 underline-offset-4">Hemen Oku</span>
+                                </div>
+                            </div>
+                            <div className="relative h-[400px] lg:h-auto overflow-hidden">
+                                <img 
+                                    src={featuredPost.featuredImage || "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"} 
+                                    alt={featuredPost.title}
+                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent lg:bg-gradient-to-r"></div>
+                            </div>
+                        </div>
+                    </Link>
                 </div>
-            ) : (
-                <>
-                    {/* Featured Post */}
-                    {featuredPost && (
-                        <Link to={`/post/${featuredPost.slug}`} className="group relative block mb-16 rounded-[2.5rem] overflow-hidden shadow-2xl shadow-slate-200/50">
-                             <div className="grid md:grid-cols-2 h-full bg-slate-900">
-                                 <div className="relative h-[300px] md:h-auto overflow-hidden">
-                                     <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent z-10 md:hidden"></div>
-                                     <img 
-                                        src={featuredPost.featuredImage || "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"}
-                                        alt="Featured" 
-                                        className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-out"
-                                     />
-                                     <div className="absolute top-6 left-6 z-20">
-                                          <span className="bg-white/20 backdrop-blur-md border border-white/20 text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider">
-                                              Günün Önerisi
-                                          </span>
-                                     </div>
-                                 </div>
-                                 
-                                 <div className="p-8 md:p-16 flex flex-col justify-center relative z-20">
-                                     <div className="flex items-center gap-3 mb-6 text-brand-300 text-sm font-semibold">
-                                         <span className="flex items-center gap-1.5"><Calendar className="w-4 h-4" /> {new Date(featuredPost.createdAt).toLocaleDateString('tr-TR')}</span>
-                                         <span className="w-1 h-1 bg-brand-300/50 rounded-full"></span>
-                                         <span className="flex items-center gap-1.5"><Clock className="w-4 h-4" /> 5 dk okuma</span>
-                                     </div>
-                                     <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 leading-tight group-hover:text-brand-300 transition-colors">
-                                         {featuredPost.title}
-                                     </h2>
-                                     <p className="text-slate-400 text-lg mb-8 line-clamp-3 leading-relaxed">
-                                         {featuredPost.excerpt}
-                                     </p>
-                                     <div className="flex items-center gap-4">
-                                         <span className="inline-flex items-center gap-2 bg-brand-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-brand-500 transition-colors">
-                                             Dersi İncele <ArrowRight className="w-5 h-5" />
-                                         </span>
-                                     </div>
-                                 </div>
-                             </div>
-                        </Link>
-                    )}
-
-                    {/* Grid Layout */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {gridPosts.map((post, idx) => (
-                            <Link to={`/post/${post.slug}`} key={post.id} className="group flex flex-col h-full">
-                                <article className="bg-white h-full rounded-3xl border border-slate-100 overflow-hidden shadow-sm hover:shadow-xl hover:shadow-slate-200/40 hover:-translate-y-2 transition-all duration-300 ease-out flex flex-col">
-                                    <div className="h-48 bg-slate-100 relative overflow-hidden">
-                                        <img 
-                                            src={post.featuredImage || `https://images.unsplash.com/photo-${idx % 2 === 0 ? '1509062522246-3755977927d7' : '1503676260728-1c00da094a0b'}?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80`} 
-                                            alt={post.title}
-                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                                        />
-                                        <div className="absolute top-4 left-4">
-                                            <span className="bg-white/90 backdrop-blur text-slate-900 px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-wider shadow-sm">
-                                                {post.category}
-                                            </span>
-                                        </div>
-                                    </div>
-                                    
-                                    <div className="p-6 flex-1 flex flex-col">
-                                        <div className="mb-4 flex items-center gap-2 text-xs text-slate-400 font-medium">
-                                            <Calendar className="w-3 h-3" /> {new Date(post.createdAt).toLocaleDateString('tr-TR')}
-                                        </div>
-                                        <h3 className="text-xl font-bold text-slate-900 group-hover:text-brand-600 transition-colors mb-3 leading-tight line-clamp-2">
-                                            {post.title}
-                                        </h3>
-                                        <p className="text-slate-500 text-sm line-clamp-3 mb-6 leading-relaxed flex-1">
-                                            {post.excerpt}
-                                        </p>
-                                        <div className="pt-4 border-t border-slate-50 flex items-center justify-between text-sm font-semibold text-brand-600">
-                                            <span>Devamını Oku</span>
-                                            <div className="w-8 h-8 rounded-full bg-brand-50 flex items-center justify-center group-hover:bg-brand-600 group-hover:text-white transition-all">
-                                                <ArrowRight className="w-4 h-4" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </article>
-                            </Link>
-                        ))}
-                    </div>
-
-                    <AdUnit className="mt-20 mb-8 rounded-2xl bg-slate-50 border-2 border-dashed border-slate-200" />
-                </>
             )}
+
+            {/* Grid Posts (Card Style 2 - Playful) */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {gridPosts.map((post, idx) => (
+                    <Link to={`/post/${post.slug}`} key={post.id} className="group h-full">
+                        <article className="h-full bg-white rounded-[2rem] border-2 border-slate-100 overflow-hidden hover:border-brand-200 hover:shadow-xl hover:shadow-brand-100/50 hover:-translate-y-2 transition-all duration-300 flex flex-col">
+                            
+                            {/* Image Area */}
+                            <div className="h-56 relative overflow-hidden m-2 rounded-[1.5rem]">
+                                <img 
+                                    src={post.featuredImage || `https://images.unsplash.com/photo-${idx % 2 === 0 ? '1509062522246-3755977927d7' : '1503676260728-1c00da094a0b'}?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80`} 
+                                    alt={post.title}
+                                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                />
+                                <div className="absolute top-4 left-4">
+                                    <span className="bg-white/90 backdrop-blur-sm text-slate-800 px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wide shadow-sm border border-slate-100">
+                                        {post.category}
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            {/* Content Area */}
+                            <div className="p-6 flex-1 flex flex-col">
+                                <div className="flex items-center gap-2 text-xs text-slate-400 font-bold mb-3 uppercase tracking-wide">
+                                    <Calendar className="w-3 h-3" /> 
+                                    {new Date(post.createdAt).toLocaleDateString('tr-TR', { month: 'long', day: 'numeric' })}
+                                </div>
+                                
+                                <h3 className="text-xl font-bold text-slate-900 mb-3 leading-snug group-hover:text-brand-600 transition-colors">
+                                    {post.title}
+                                </h3>
+                                
+                                <p className="text-slate-500 text-sm leading-relaxed mb-6 line-clamp-3 flex-1">
+                                    {post.excerpt}
+                                </p>
+                                
+                                <div className="pt-4 border-t border-slate-50 flex items-center justify-between">
+                                    <div className="flex items-center gap-2">
+                                        <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-400">
+                                            <User className="w-4 h-4" />
+                                        </div>
+                                        <span className="text-xs font-bold text-slate-500">Dilek Öğretmen</span>
+                                    </div>
+                                    <div className="w-8 h-8 rounded-full bg-brand-50 flex items-center justify-center text-brand-600 group-hover:bg-brand-500 group-hover:text-white transition-colors">
+                                        <ArrowRight className="w-4 h-4" />
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </Link>
+                ))}
+            </div>
+
+            <AdUnit className="mt-20 mb-8 rounded-2xl bg-slate-50 border-2 border-dashed border-slate-200" />
          </div>
-      </div>
+      </section>
     </Layout>
   );
 };

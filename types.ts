@@ -91,6 +91,8 @@ export interface AdUnitConfig {
   codeSnippet?: string;
 }
 
+export type ThemeColor = 'ocean' | 'candy' | 'nature' | 'sunset' | 'royal';
+
 export interface SiteSettings {
   // General
   siteName: string;
@@ -102,6 +104,7 @@ export interface SiteSettings {
   footerText: string;
   language: string;
   timezone: string;
+  themeColor: ThemeColor; // Added Theme Color
 
   // SEO
   googleSearchConsoleId: string;

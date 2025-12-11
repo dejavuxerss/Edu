@@ -32,17 +32,17 @@
             },
             colors: {
               brand: {
-                50: '#f0fdfa',
-                100: '#ccfbf1',
-                200: '#99f6e4',
-                300: '#5eead4',
-                400: '#2dd4bf',
-                500: '#14b8a6',
-                600: '#0d9488',
-                700: '#0f766e',
-                800: '#115e59',
-                900: '#134e4a',
-                950: '#042f2e',
+                50: 'rgb(var(--color-brand-50) / <alpha-value>)',
+                100: 'rgb(var(--color-brand-100) / <alpha-value>)',
+                200: 'rgb(var(--color-brand-200) / <alpha-value>)',
+                300: 'rgb(var(--color-brand-300) / <alpha-value>)',
+                400: 'rgb(var(--color-brand-400) / <alpha-value>)',
+                500: 'rgb(var(--color-brand-500) / <alpha-value>)',
+                600: 'rgb(var(--color-brand-600) / <alpha-value>)',
+                700: 'rgb(var(--color-brand-700) / <alpha-value>)',
+                800: 'rgb(var(--color-brand-800) / <alpha-value>)',
+                900: 'rgb(var(--color-brand-900) / <alpha-value>)',
+                950: 'rgb(var(--color-brand-950) / <alpha-value>)',
               },
               wp: {
                   sidebar: '#1e1e1e',
@@ -122,7 +122,7 @@
       }
 
       .glass-nav {
-        background: rgba(255, 255, 255, 0.7);
+        background: rgba(255, 255, 255, 0.9);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
       }
@@ -137,6 +137,21 @@
         border: 1px solid rgba(255, 255, 255, 0.5);
       }
       
+      /* Default Brand Colors (Blue/Ocean) - Fallback */
+      :root {
+        --color-brand-50: 240 253 250;
+        --color-brand-100: 204 251 241;
+        --color-brand-200: 153 246 228;
+        --color-brand-300: 94 234 212;
+        --color-brand-400: 45 212 191;
+        --color-brand-500: 20 184 166;
+        --color-brand-600: 13 148 136;
+        --color-brand-700: 15 118 110;
+        --color-brand-800: 17 94 89;
+        --color-brand-900: 19 78 74;
+        --color-brand-950: 4 47 46;
+      }
+
       /* Editor Content Styles */
       .editor-content img {
         max-width: 100%;

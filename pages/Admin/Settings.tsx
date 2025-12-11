@@ -2,13 +2,13 @@
 import React, { useEffect, useState } from 'react';
 import { 
     Save, LayoutTemplate, Globe, DollarSign, Share2, Mail, Zap, 
-    CheckCircle, AlertCircle, Image as ImageIcon 
+    CheckCircle, AlertCircle, Image as ImageIcon, Palette
 } from 'lucide-react';
 import { Layout, notify } from '../../components/Layout';
 import { getSettings, saveSettings } from '../../services/storage';
-import { SiteSettings } from '../../types';
+import { SiteSettings, ThemeColor } from '../../types';
 
-type Tab = 'general' | 'seo' | 'adsense' | 'social' | 'email' | 'performance';
+type Tab = 'general' | 'appearance' | 'seo' | 'adsense' | 'social' | 'email' | 'performance';
 
 export const AdminSettings: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>('general');
@@ -31,6 +31,11 @@ export const AdminSettings: React.FC = () => {
       });
   };
 
+  const handleColorSelect = (color: ThemeColor) => {
+      if (!settings) return;
+      setSettings(prev => prev ? ({ ...prev, themeColor: color }) : null);
+  };
+
   const handleSave = () => {
       if (settings) {
           // Simple validation
@@ -40,6 +45,9 @@ export const AdminSettings: React.FC = () => {
           }
 
           saveSettings(settings);
+          // Trigger custom event for immediate theme update in App.tsx
+          window.dispatchEvent(new Event('settingsUpdated'));
+          
           setSaved(true);
           notify('success', 'Ayarlar başarıyla kaydedildi.');
           setTimeout(() => setSaved(false), 2000);
@@ -71,6 +79,9 @@ export const AdminSettings: React.FC = () => {
                     <nav className="flex flex-col p-2 space-y-1">
                         <button onClick={() => setActiveTab('general')} className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${activeTab === 'general' ? 'bg-wp-accent text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white'}`}>
                             <LayoutTemplate className="w-5 h-5" /> Genel Ayarlar
+                        </button>
+                        <button onClick={() => setActiveTab('appearance')} className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${activeTab === 'appearance' ? 'bg-wp-accent text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white'}`}>
+                            <Palette className="w-5 h-5" /> Görünüm
                         </button>
                         <button onClick={() => setActiveTab('seo')} className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${activeTab === 'seo' ? 'bg-wp-accent text-white' : 'text-gray-400 hover:bg-gray-800 hover:text-white'}`}>
                             <Globe className="w-5 h-5" /> SEO Ayarları
@@ -119,6 +130,83 @@ export const AdminSettings: React.FC = () => {
                         </div>
 
                         <div className="bg-wp-card border border-gray-700 rounded-xl p-6">
+                            <h3 className="text-lg font-bold text-white mb-6 border-b border-gray-700 pb-4">Yerelleştirme</h3>
+                            <div className="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <label className="block text-xs font-bold text-gray-400 uppercase mb-2">Dil</label>
+                                    <select name="language" value={settings.language} onChange={handleChange} className="w-full bg-gray-900 border border-gray-700 text-white px-4 py-2.5 rounded-lg focus:border-wp-accent outline-none">
+                                        <option value="tr">Türkçe (TR)</option>
+                                        <option value="en">English (EN)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="block text-xs font-bold text-gray-400 uppercase mb-2">Zaman Dilimi</label>
+                                    <select name="timezone" value={settings.timezone} onChange={handleChange} className="w-full bg-gray-900 border border-gray-700 text-white px-4 py-2.5 rounded-lg focus:border-wp-accent outline-none">
+                                        <option value="Europe/Istanbul">Europe/Istanbul (GMT+3)</option>
+                                        <option value="UTC">UTC</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {/* 1.5 APPEARANCE TAB */}
+                {activeTab === 'appearance' && (
+                    <div className="space-y-6 animate-fade-in-up">
+                        <div className="bg-wp-card border border-gray-700 rounded-xl p-6">
+                            <h3 className="text-lg font-bold text-white mb-6 border-b border-gray-700 pb-4">Site Teması</h3>
+                            <p className="text-gray-400 text-sm mb-6">Sitenizin ana renk tonunu seçin. Bu değişiklik tüm sitede anında uygulanır.</p>
+                            
+                            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                                <button 
+                                    onClick={() => handleColorSelect('ocean')}
+                                    className={`relative group flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all ${settings.themeColor === 'ocean' ? 'border-teal-500 bg-teal-900/20' : 'border-gray-700 hover:border-teal-500/50'}`}
+                                >
+                                    <div className="w-12 h-12 rounded-full bg-teal-500 shadow-lg shadow-teal-500/30"></div>
+                                    <span className="text-sm font-bold text-white">Okyanus</span>
+                                    {settings.themeColor === 'ocean' && <CheckCircle className="absolute top-2 right-2 w-4 h-4 text-teal-500" />}
+                                </button>
+
+                                <button 
+                                    onClick={() => handleColorSelect('candy')}
+                                    className={`relative group flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all ${settings.themeColor === 'candy' ? 'border-pink-500 bg-pink-900/20' : 'border-gray-700 hover:border-pink-500/50'}`}
+                                >
+                                    <div className="w-12 h-12 rounded-full bg-pink-500 shadow-lg shadow-pink-500/30"></div>
+                                    <span className="text-sm font-bold text-white">Şeker</span>
+                                    {settings.themeColor === 'candy' && <CheckCircle className="absolute top-2 right-2 w-4 h-4 text-pink-500" />}
+                                </button>
+
+                                <button 
+                                    onClick={() => handleColorSelect('nature')}
+                                    className={`relative group flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all ${settings.themeColor === 'nature' ? 'border-emerald-500 bg-emerald-900/20' : 'border-gray-700 hover:border-emerald-500/50'}`}
+                                >
+                                    <div className="w-12 h-12 rounded-full bg-emerald-500 shadow-lg shadow-emerald-500/30"></div>
+                                    <span className="text-sm font-bold text-white">Doğa</span>
+                                    {settings.themeColor === 'nature' && <CheckCircle className="absolute top-2 right-2 w-4 h-4 text-emerald-500" />}
+                                </button>
+
+                                <button 
+                                    onClick={() => handleColorSelect('sunset')}
+                                    className={`relative group flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all ${settings.themeColor === 'sunset' ? 'border-amber-500 bg-amber-900/20' : 'border-gray-700 hover:border-amber-500/50'}`}
+                                >
+                                    <div className="w-12 h-12 rounded-full bg-amber-500 shadow-lg shadow-amber-500/30"></div>
+                                    <span className="text-sm font-bold text-white">Güneş</span>
+                                    {settings.themeColor === 'sunset' && <CheckCircle className="absolute top-2 right-2 w-4 h-4 text-amber-500" />}
+                                </button>
+
+                                <button 
+                                    onClick={() => handleColorSelect('royal')}
+                                    className={`relative group flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all ${settings.themeColor === 'royal' ? 'border-violet-500 bg-violet-900/20' : 'border-gray-700 hover:border-violet-500/50'}`}
+                                >
+                                    <div className="w-12 h-12 rounded-full bg-violet-500 shadow-lg shadow-violet-500/30"></div>
+                                    <span className="text-sm font-bold text-white">Uzay</span>
+                                    {settings.themeColor === 'royal' && <CheckCircle className="absolute top-2 right-2 w-4 h-4 text-violet-500" />}
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="bg-wp-card border border-gray-700 rounded-xl p-6">
                             <h3 className="text-lg font-bold text-white mb-6 border-b border-gray-700 pb-4">Görseller</h3>
                             <div className="space-y-4">
                                 <div>
@@ -138,26 +226,6 @@ export const AdminSettings: React.FC = () => {
                                             {settings.faviconUrl ? <img src={settings.faviconUrl} className="max-w-full max-h-full"/> : <ImageIcon className="w-5 h-5 text-gray-600"/>}
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="bg-wp-card border border-gray-700 rounded-xl p-6">
-                            <h3 className="text-lg font-bold text-white mb-6 border-b border-gray-700 pb-4">Yerelleştirme</h3>
-                            <div className="grid md:grid-cols-2 gap-4">
-                                <div>
-                                    <label className="block text-xs font-bold text-gray-400 uppercase mb-2">Dil</label>
-                                    <select name="language" value={settings.language} onChange={handleChange} className="w-full bg-gray-900 border border-gray-700 text-white px-4 py-2.5 rounded-lg focus:border-wp-accent outline-none">
-                                        <option value="tr">Türkçe (TR)</option>
-                                        <option value="en">English (EN)</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label className="block text-xs font-bold text-gray-400 uppercase mb-2">Zaman Dilimi</label>
-                                    <select name="timezone" value={settings.timezone} onChange={handleChange} className="w-full bg-gray-900 border border-gray-700 text-white px-4 py-2.5 rounded-lg focus:border-wp-accent outline-none">
-                                        <option value="Europe/Istanbul">Europe/Istanbul (GMT+3)</option>
-                                        <option value="UTC">UTC</option>
-                                    </select>
                                 </div>
                             </div>
                         </div>

@@ -12,6 +12,7 @@ export const DEFAULT_SETTINGS: SiteSettings = {
   footerText: "Bilgi paylaştıkça çoğalır. Öğrencilerim için sevgiyle hazırlandı.",
   language: "tr",
   timezone: "Europe/Istanbul",
+  themeColor: 'ocean', // Default color theme
 
   // SEO
   googleSearchConsoleId: "GSC-Verification-Token-123",
